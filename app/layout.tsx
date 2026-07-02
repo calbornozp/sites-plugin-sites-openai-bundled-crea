@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "htc.lat",
+    siteName: SITE_META.siteName,
     locale: SITE_META.locale,
     url: "/",
     title: SITE_META.title,

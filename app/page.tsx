@@ -55,10 +55,10 @@ export default function Home() {
               {HEADER.mark}
             </span>
             <div>
-              <p className="text-sm font-semibold tracking-[0.28em] text-cyan-700">
-                {HEADER.eyebrow}
+              <p className="text-sm font-semibold text-slate-950">
+                {HEADER.companyName}
               </p>
-              <p className="mt-1 text-sm text-slate-500">{HEADER.subtitle}</p>
+              <p className="mt-0.5 text-sm text-slate-500">{HEADER.subtitle}</p>
             </div>
           </div>
 

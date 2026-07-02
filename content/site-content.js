@@ -5,8 +5,11 @@
 
 export const SITE_URL = "https://htc.lat";
 
+export const COMPANY_NAME = "Human Talent Consulting";
+
 export const SITE_META = {
-  title: "Cumplimiento laboral inteligente | Carlos Albornoz",
+  siteName: COMPANY_NAME,
+  title: "Human Talent Consulting | Cumplimiento laboral inteligente",
   description:
     "Consultora chilena en legislación laboral, DS44, Ley Karin y automatización de RRHH con Inteligencia Artificial.",
   locale: "es_CL",
@@ -26,14 +29,14 @@ export const NAV_ITEMS = [
 ];
 
 export const HEADER = {
-  mark: "C",
-  eyebrow: "CUMPLIMIENTO LABORAL INTELIGENTE",
+  mark: "HT",
+  companyName: COMPANY_NAME,
   subtitle: "Consultoría laboral, RRHH e Inteligencia Artificial",
 };
 
 export const HERO = {
   pill: "Reducimos hasta 70% de costos administrativos de RRHH",
-  eyebrow: "Consultora chilena",
+  eyebrow: COMPANY_NAME,
   title:
     "Cumplimiento laboral inteligente para empresas que necesitan orden, velocidad y control.",
   lede: "Ayudamos a implementar DS44, fortalecer Ley Karin y transformar RRHH con procesos documentados, automatización e Inteligencia Artificial.",
@@ -273,7 +276,8 @@ export const CONTACT_FORM_MESSAGES = {
 export const STRUCTURED_DATA = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "htc.lat",
+  name: COMPANY_NAME,
+  alternateName: "HTC",
   url: SITE_URL,
   email: CONTACT_EMAIL,
   telephone: `+${WHATSAPP_NUMBER}`,

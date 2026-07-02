@@ -50,7 +50,7 @@ const page = `<!DOCTYPE html>
     <link rel="dns-prefetch" href="https://api.web3forms.com" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="htc.lat" />
+    <meta property="og:site_name" content="${escapeHtml(SITE_META.siteName)}" />
     <meta property="og:locale" content="${SITE_META.locale}" />
     <meta property="og:url" content="${SITE_URL}/" />
     <meta property="og:title" content="${escapeHtml(SITE_META.title)}" />
@@ -123,6 +123,7 @@ const page = `<!DOCTYPE html>
         padding: 16px 24px;
       }
       .brand { display: flex; align-items: center; gap: 12px; }
+      .brand-name { margin: 0; font-size: 14px; font-weight: 700; color: var(--text); }
       .brand-mark {
         display: inline-flex;
         align-items: center;
@@ -147,7 +148,7 @@ const page = `<!DOCTYPE html>
       .subtle {
         color: var(--muted);
         font-size: 15px;
-        margin: 8px 0 0;
+        margin: 2px 0 0;
       }
       .nav {
         display: flex;
@@ -423,7 +424,7 @@ const page = `<!DOCTYPE html>
         <div class="brand">
           <span class="brand-mark">${escapeHtml(HEADER.mark)}</span>
           <div>
-            <p class="eyebrow">${escapeHtml(HEADER.eyebrow)}</p>
+            <p class="brand-name">${escapeHtml(HEADER.companyName)}</p>
             <p class="subtle">${escapeHtml(HEADER.subtitle)}</p>
           </div>
         </div>
