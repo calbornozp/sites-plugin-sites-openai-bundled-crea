@@ -1,5 +1,8 @@
 name: alprint-hr-site
 region: nyc
+domains:
+  - domain: htc.lat
+    type: PRIMARY
 static_sites:
   - name: website
     github:
