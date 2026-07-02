@@ -1,0 +1,12 @@
+name: alprint-hr-site
+region: nyc
+static_sites:
+  - name: website
+    github:
+      repo: calbornozp/sites-plugin-sites-openai-bundled-crea
+      branch: main
+      deploy_on_push: true
+    build_command: npm run build
+    output_dir: out
+    source_dir: /
+    environment_slug: html
