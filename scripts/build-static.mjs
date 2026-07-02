@@ -1,87 +1,27 @@
-import { mkdir, readFile, writeFile, copyFile, rm } from "node:fs/promises";
+import { mkdir, writeFile, copyFile, rm } from "node:fs/promises";
 import path from "node:path";
+import {
+  BENEFITS_SECTION,
+  COMPARE,
+  CONTACT_EMAIL,
+  CONTACT_SECTION,
+  FAQ_SECTION,
+  HEADER,
+  HERO,
+  METHOD_SECTION,
+  NAV_ITEMS,
+  SERVICES_SECTION,
+  SITE_META,
+  SITE_URL,
+  STRUCTURED_DATA,
+  TEAM_SECTION,
+  VIRTUAL_ROLES,
+  WHATSAPP_MESSAGE,
+  WHATSAPP_NUMBER,
+} from "../content/site-content.js";
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
-
-const CONTACT_EMAIL = "contacto@htc.lat";
-const WHATSAPP_NUMBER = "56999386594";
-const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY ?? "";
-
-const services = [
-  "Cumplimiento Legal",
-  "Implementacion DS44",
-  "Ley Karin",
-  "Automatizacion RRHH",
-  "Auditorias Laborales",
-  "Capacitacion",
-  "Consultoria Estrategica",
-  "IA para RRHH",
-];
-
-const benefits = [
-  "Menos carga administrativa",
-  "Mayor cumplimiento legal",
-  "Preparacion para fiscalizaciones",
-  "Documentacion centralizada",
-  "Menor riesgo de multas",
-  "Informacion en tiempo real",
-];
-
-const roles = [
-  {
-    title: "Ley Karin",
-    description:
-      "Gestion documental, protocolos, seguimiento de casos y evidencia trazable.",
-  },
-  {
-    title: "Prevencion de Riesgos",
-    description:
-      "Seguimiento DS44, matrices, controles y orden documental permanente.",
-  },
-  {
-    title: "Remuneraciones",
-    description:
-      "Automatizacion de calculos, revision, respaldo y control de alertas.",
-  },
-  {
-    title: "Control de Turnos",
-    description:
-      "Asistencia, jornadas, horas extra y alertas sobre desajustes operativos.",
-  },
-  {
-    title: "Inspector Interno",
-    description:
-      "Auditorias permanentes, revision documental y preparacion para fiscalizaciones.",
-  },
-];
-
-const steps = [
-  "Diagnostico gratuito",
-  "Oportunidades de automatizacion",
-  "Diseno del plan",
-  "Implementacion",
-  "Acompanamiento",
-];
-
-const faqs = [
-  [
-    "Debo cambiar mi software?",
-    "No necesariamente. Trabajamos sobre la realidad existente y ordenamos la operacion sin forzar reemplazos innecesarios.",
-  ],
-  [
-    "Cuanto demora?",
-    "La primera puesta en marcha puede avanzar en menos de un mes, segun el alcance y la madurez del area.",
-  ],
-  [
-    "Sirve para empresas pequenas?",
-    "Si. El enfoque se adapta al tamano de la organizacion y a su nivel de digitalizacion.",
-  ],
-  [
-    "Es compatible con mi sistema actual?",
-    "En la mayoria de los casos, si. La propuesta se diseña para convivir con el ecosistema actual.",
-  ],
-];
 
 const escapeHtml = (value) =>
   String(value)
@@ -100,9 +40,27 @@ const page = `<!DOCTYPE html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cumplimiento laboral inteligente | Carlos Albornoz</title>
-    <meta name="description" content="Consultora chilena en legislación laboral, DS44, Ley Karin y automatización de RRHH con Inteligencia Artificial." />
+    <title>${escapeHtml(SITE_META.title)}</title>
+    <meta name="description" content="${escapeHtml(SITE_META.description)}" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="${SITE_META.themeColor}" />
+    <link rel="canonical" href="${SITE_URL}/" />
     <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://api.web3forms.com" />
+    <link rel="dns-prefetch" href="https://api.web3forms.com" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="htc.lat" />
+    <meta property="og:locale" content="${SITE_META.locale}" />
+    <meta property="og:url" content="${SITE_URL}/" />
+    <meta property="og:title" content="${escapeHtml(SITE_META.title)}" />
+    <meta property="og:description" content="${escapeHtml(SITE_META.description)}" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${escapeHtml(SITE_META.title)}" />
+    <meta name="twitter:description" content="${escapeHtml(SITE_META.description)}" />
+
+    <script type="application/ld+json">${JSON.stringify(STRUCTURED_DATA)}</script>
     <style>
       :root {
         --bg: #f7f5f0;
@@ -145,14 +103,38 @@ const page = `<!DOCTYPE html>
           radial-gradient(circle at top left, rgba(14, 165, 233, 0.12), transparent 30%),
           radial-gradient(circle at top right, rgba(15, 23, 42, 0.1), transparent 28%);
       }
-      .header {
-        position: relative;
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        border-bottom: 1px solid var(--line);
+        background: rgba(247, 245, 240, 0.85);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+      .site-header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
         display: flex;
         gap: 24px;
         justify-content: space-between;
-        align-items: end;
-        border-bottom: 1px solid var(--line);
-        padding-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 16px 24px;
+      }
+      .brand { display: flex; align-items: center; gap: 12px; }
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 16px;
+        background: #0f172a;
+        color: #fff;
+        font-weight: 700;
+        font-size: 14px;
+        flex: 0 0 auto;
       }
       .eyebrow {
         margin: 0;
@@ -352,7 +334,6 @@ const page = `<!DOCTYPE html>
       .step { display: flex; gap: 14px; padding: 16px; }
       .step .num { width: 40px; height: 40px; border-radius: 14px; background: #0f172a; color: #fff; display: grid; place-items: center; font-weight: 700; flex: 0 0 auto; }
       .step p { margin: 2px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
-      .team-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 24px; align-items: start; }
       .info { padding: 24px; }
       .info p { margin: 0; color: var(--muted); line-height: 1.9; }
       .quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
@@ -423,7 +404,7 @@ const page = `<!DOCTYPE html>
       }
 
       @media (max-width: 1024px) {
-        .hero, .section-grid, .team-grid, .cta-grid { grid-template-columns: 1fr; display: grid; }
+        .hero, .section-grid, .cta-grid { grid-template-columns: 1fr; display: grid; }
         .cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
         .quotes { grid-template-columns: 1fr; }
       }
@@ -437,48 +418,47 @@ const page = `<!DOCTYPE html>
     </style>
   </head>
   <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <div class="brand">
+          <span class="brand-mark">${escapeHtml(HEADER.mark)}</span>
+          <div>
+            <p class="eyebrow">${escapeHtml(HEADER.eyebrow)}</p>
+            <p class="subtle">${escapeHtml(HEADER.subtitle)}</p>
+          </div>
+        </div>
+        <nav class="nav">
+          ${NAV_ITEMS.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}
+        </nav>
+      </div>
+    </header>
     <main>
       <div class="shell">
-        <header class="header">
-          <div>
-            <p class="eyebrow">CUMPLIMIENTO LABORAL INTELIGENTE</p>
-            <p class="subtle">Consultoria laboral, RRHH e Inteligencia Artificial</p>
-          </div>
-          <nav class="nav">
-            <a href="#servicios">Servicios</a>
-            <a href="#metodo">Metodo</a>
-            <a href="#equipo">Equipo</a>
-            <a href="#contacto">Contacto</a>
-          </nav>
-        </header>
-
         <section class="hero">
           <div>
-            <div class="pill">Reducimos hasta 70% de costos administrativos de RRHH</div>
-            <p class="eyebrow" style="margin-top:18px;">Consultora chilena</p>
-            <h1>Cumplimiento laboral inteligente para empresas que necesitan orden, velocidad y control.</h1>
-            <p class="lede">Ayudamos a implementar DS44, fortalecer Ley Karin y transformar RRHH con procesos documentados, automatizacion e Inteligencia Artificial.</p>
+            <div class="pill">${escapeHtml(HERO.pill)}</div>
+            <p class="eyebrow" style="margin-top:18px;">${escapeHtml(HERO.eyebrow)}</p>
+            <h1>${escapeHtml(HERO.title)}</h1>
+            <p class="lede">${escapeHtml(HERO.lede)}</p>
             <div class="actions">
-              <a class="button" href="#contacto">Agenda una reunion</a>
-              <a class="button-outline" href="#metodo">Solicita un diagnostico gratuito</a>
+              <a class="button" href="${HERO.primaryCta.href}">${escapeHtml(HERO.primaryCta.label)}</a>
+              <a class="button-outline" href="${HERO.secondaryCta.href}">${escapeHtml(HERO.secondaryCta.label)}</a>
             </div>
             <div class="stats">
-              <div class="stat"><strong>20+ anos</strong><span>asesorando organizaciones</span></div>
-              <div class="stat"><strong>5 roles</strong><span>virtuales especializados</span></div>
-              <div class="stat"><strong>24/7</strong><span>automatizacion y alertas</span></div>
+              ${HERO.stats.map(({ value, label }) => `<div class="stat"><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join("")}
             </div>
           </div>
           <div class="visual">
             <div class="visual-card">
               <div class="visual-head">
                 <div>
-                  <p class="eyebrow">Cinco empleados virtuales</p>
-                  <p class="visual-title">En menos de un mes</p>
+                  <p class="eyebrow">${escapeHtml(HERO.panel.eyebrow)}</p>
+                  <p class="visual-title">${escapeHtml(HERO.panel.title)}</p>
                 </div>
-                <div class="mini">IA aplicada a RRHH</div>
+                <div class="mini">${escapeHtml(HERO.panel.badge)}</div>
               </div>
               <div class="role-list">
-                ${cardsHtml(roles, (role, idx) => `
+                ${cardsHtml(VIRTUAL_ROLES, (role, idx) => `
                   <div class="role">
                     <div class="role-top">
                       <div class="badge">${String(idx + 1).padStart(2, "0")}</div>
@@ -496,32 +476,32 @@ const page = `<!DOCTYPE html>
 
         <section class="section section-grid">
           <div>
-            <p class="eyebrow">Antes y despues</p>
-            <h2 class="section-title">De la operacion manual a un sistema de cumplimiento vivo.</h2>
-            <p class="section-copy">Muchos equipos siguen trabajando con planillas, correos y documentos dispersos. Eso aumenta los errores, eleva el costo administrativo y deja huecos de trazabilidad.</p>
+            <p class="eyebrow">${escapeHtml(COMPARE.eyebrow)}</p>
+            <h2 class="section-title">${escapeHtml(COMPARE.title)}</h2>
+            <p class="section-copy">${escapeHtml(COMPARE.description)}</p>
           </div>
           <div class="compare">
             <div class="col before">
-              <h3>Antes</h3>
-              <ul>${listHtml(["Planillas Excel","Documentos dispersos","Correos","Errores","Multas","Retrabajo"])}</ul>
+              <h3>${escapeHtml(COMPARE.before.label)}</h3>
+              <ul>${listHtml(COMPARE.before.items)}</ul>
             </div>
             <div class="col after">
-              <h3>Despues</h3>
-              <ul>${listHtml(["Procesos automatizados","IA trabajando 24/7","Documentos centralizados","Cumplimiento permanente","Reportes automáticos","Indicadores en tiempo real"])}</ul>
+              <h3>${escapeHtml(COMPARE.after.label)}</h3>
+              <ul>${listHtml(COMPARE.after.items)}</ul>
             </div>
           </div>
         </section>
 
         <section class="section" id="servicios">
-          <p class="eyebrow">Servicios</p>
-          <h2 class="section-title">Una consultora, múltiples frentes de soporte.</h2>
-          <p class="section-copy">Cubrimos cumplimiento, prevencion, automatizacion, formacion y estrategia con una sola hoja de ruta.</p>
+          <p class="eyebrow">${escapeHtml(SERVICES_SECTION.eyebrow)}</p>
+          <h2 class="section-title">${escapeHtml(SERVICES_SECTION.title)}</h2>
+          <p class="section-copy">${escapeHtml(SERVICES_SECTION.description)}</p>
           <div class="cards" style="margin-top:18px;">
-            ${cardsHtml(services, (service, idx) => `
+            ${cardsHtml(SERVICES_SECTION.items, (service, idx) => `
               <article class="card">
                 <div class="index"><span>${String(idx + 1).padStart(2, "0")}</span><div class="line"></div></div>
-                <h3>${escapeHtml(service)}</h3>
-                <p>Diseñado para mejorar cumplimiento, ordenar evidencia y acelerar la ejecucion sin friccion operativa.</p>
+                <h3>${escapeHtml(service.title)}</h3>
+                <p>${escapeHtml(service.description)}</p>
               </article>
             `)}
           </div>
@@ -529,24 +509,24 @@ const page = `<!DOCTYPE html>
 
         <section class="section section-grid" id="metodo">
           <div class="dark-panel">
-            <p class="eyebrow" style="color:#93c5fd;">Beneficios</p>
-            <h2 class="section-title" style="color:#fff;">Menos riesgo y mas control.</h2>
-            <p class="section-copy">El resultado es una operacion con menos carga administrativa, mejor trazabilidad y un equipo que puede enfocarse en decisiones de valor.</p>
+            <p class="eyebrow" style="color:#93c5fd;">${escapeHtml(BENEFITS_SECTION.eyebrow)}</p>
+            <h2 class="section-title" style="color:#fff;">${escapeHtml(BENEFITS_SECTION.title)}</h2>
+            <p class="section-copy">${escapeHtml(BENEFITS_SECTION.description)}</p>
             <div class="benefits">
-              ${benefits.map((benefit) => `<div class="benefit">${escapeHtml(benefit)}</div>`).join("")}
+              ${BENEFITS_SECTION.items.map((benefit) => `<div class="benefit">${escapeHtml(benefit)}</div>`).join("")}
             </div>
           </div>
           <div class="panel" style="padding:26px;">
-            <p class="eyebrow">Como trabajamos</p>
-            <h2 class="section-title">Un proceso corto, claro y medible.</h2>
-            <p class="section-copy">Cada fase se diseña para avanzar con orden, asegurar adopcion y mostrar resultados medibles desde el inicio.</p>
+            <p class="eyebrow">${escapeHtml(METHOD_SECTION.eyebrow)}</p>
+            <h2 class="section-title">${escapeHtml(METHOD_SECTION.title)}</h2>
+            <p class="section-copy">${escapeHtml(METHOD_SECTION.description)}</p>
             <div class="steps">
-              ${steps.map((step, idx) => `
+              ${METHOD_SECTION.steps.map((step, idx) => `
                 <div class="step">
                   <div class="num">${idx + 1}</div>
                   <div>
-                    <div style="font-weight:700;font-size:16px;">${escapeHtml(step)}</div>
-                    <p>Cada etapa ordena la implementacion y deja una siguiente decision clara.</p>
+                    <div style="font-weight:700;font-size:16px;">${escapeHtml(step.title)}</div>
+                    <p>${escapeHtml(step.description)}</p>
                   </div>
                 </div>
               `).join("")}
@@ -554,37 +534,24 @@ const page = `<!DOCTYPE html>
           </div>
         </section>
 
-        <section class="section team-grid" id="equipo">
-          <div>
-            <p class="eyebrow">Fundador</p>
-            <h2 class="section-title">Carlos Albornoz.</h2>
-            <p class="section-copy">Empresario, psicologo organizacional, academico y consultor de empresas. Mas de 20 anos asesorando organizaciones en gestion de personas, legislacion laboral, liderazgo y desarrollo organizacional.</p>
-            <div class="info">
-              <p>Su experiencia combina psicologia organizacional, direccion de empresas, legislacion laboral aplicada al negocio y formacion de lideres, con foco en integrar Inteligencia Artificial para transformar areas administrativas en unidades estrategicas.</p>
-            </div>
-          </div>
-          <div class="panel" style="padding:24px;">
-            <p class="eyebrow">Prueba social</p>
-            <div class="quotes" style="margin-top:18px;">
-              ${["Espacio para testimonios de clientes.","Casos de reduccion de carga administrativa.","Resultados en cumplimiento y control."].map((item) => `
-                <article class="quote">
-                  <div class="mark">“</div>
-                  <p style="color:var(--muted);font-size:14px;line-height:1.8;margin:10px 0 0;">${escapeHtml(item)}</p>
-                </article>
-              `).join("")}
-            </div>
+        <section class="section" id="equipo">
+          <p class="eyebrow">${escapeHtml(TEAM_SECTION.eyebrow)}</p>
+          <h2 class="section-title">${escapeHtml(TEAM_SECTION.name)}</h2>
+          <p class="section-copy">${escapeHtml(TEAM_SECTION.description)}</p>
+          <div class="info" style="max-width:780px;">
+            <p>${escapeHtml(TEAM_SECTION.bio)}</p>
           </div>
         </section>
 
         <section class="section" aria-labelledby="faq-title">
-          <p class="eyebrow" id="faq-title">Preguntas frecuentes</p>
-          <h2 class="section-title">Resolvemos las dudas mas comunes antes de partir.</h2>
-          <p class="section-copy">Nos interesa que el equipo entienda la propuesta antes de tomar una decision.</p>
+          <p class="eyebrow" id="faq-title">${escapeHtml(FAQ_SECTION.eyebrow)}</p>
+          <h2 class="section-title">${escapeHtml(FAQ_SECTION.title)}</h2>
+          <p class="section-copy">${escapeHtml(FAQ_SECTION.description)}</p>
           <div class="faq-list" style="margin-top:18px;">
-            ${faqs.map(([question, answer]) => `
+            ${FAQ_SECTION.items.map((faq) => `
               <details class="faq">
-                <summary>${escapeHtml(question)}</summary>
-                <p>${escapeHtml(answer)}</p>
+                <summary>${escapeHtml(faq.question)}</summary>
+                <p>${escapeHtml(faq.answer)}</p>
               </details>
             `).join("")}
           </div>
@@ -593,14 +560,14 @@ const page = `<!DOCTYPE html>
         <section class="cta" id="contacto">
           <div class="cta-grid" style="align-items:flex-start;">
             <div>
-              <p class="eyebrow">Contacto</p>
-              <h2>Descubra cuanto podria ahorrar automatizando su area de Recursos Humanos.</h2>
-              <p>Agende una reunion y conozca como su empresa puede contar con cinco asistentes virtuales especializados en cumplimiento laboral en menos de un mes.</p>
+              <p class="eyebrow">${escapeHtml(CONTACT_SECTION.eyebrow)}</p>
+              <h2>${escapeHtml(CONTACT_SECTION.title)}</h2>
+              <p>${escapeHtml(CONTACT_SECTION.description)}</p>
               <div class="actions">
-                <a class="button button-whatsapp" target="_blank" rel="noopener noreferrer" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero saber mas sobre sus servicios de cumplimiento laboral.")}">Escribir por WhatsApp</a>
-                <a class="button" href="mailto:${CONTACT_EMAIL}">Escribir por correo</a>
+                <a class="button button-whatsapp" target="_blank" rel="noopener noreferrer" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}">${escapeHtml(CONTACT_SECTION.whatsappCtaLabel)}</a>
+                <a class="button" href="mailto:${CONTACT_EMAIL}">${escapeHtml(CONTACT_SECTION.emailCtaLabel)}</a>
               </div>
-              <p class="contact-note">${CONTACT_EMAIL} &middot; +${WHATSAPP_NUMBER}</p>
+              <p class="contact-note">${escapeHtml(CONTACT_EMAIL)} &middot; +${WHATSAPP_NUMBER}</p>
             </div>
             <div class="panel contact-panel">
               <form class="contact-form" id="contact-form">
@@ -617,9 +584,9 @@ const page = `<!DOCTYPE html>
           </div>
         </section>
         <script>
-          window.WEB3FORMS_ACCESS_KEY = ${JSON.stringify(WEB3FORMS_ACCESS_KEY)};
+          window.WEB3FORMS_ACCESS_KEY = ${JSON.stringify(process.env.WEB3FORMS_ACCESS_KEY ?? "")};
         </script>
-        <script src="/contact-form.js"></script>
+        <script type="module" src="/contact-form.js"></script>
         <div class="footer-spacer"></div>
       </div>
     </main>
@@ -636,6 +603,21 @@ try {
 
 try {
   await copyFile(path.join(root, "public", "contact-form.js"), path.join(outDir, "contact-form.js"));
+} catch {}
+
+try {
+  await copyFile(
+    path.join(root, "content", "site-content.js"),
+    path.join(outDir, "site-content.js"),
+  );
+} catch {}
+
+try {
+  await copyFile(path.join(root, "public", "robots.txt"), path.join(outDir, "robots.txt"));
+} catch {}
+
+try {
+  await copyFile(path.join(root, "public", "sitemap.xml"), path.join(outDir, "sitemap.xml"));
 } catch {}
 
 console.log("Static site written to out/");

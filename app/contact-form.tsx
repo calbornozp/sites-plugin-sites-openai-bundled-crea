@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { CONTACT_EMAIL, CONTACT_FORM_MESSAGES } from "../content/site-content.js";
 
 const WEB3FORMS_ACCESS_KEY =
   process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
@@ -22,7 +23,7 @@ export function ContactForm() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    formData.append("subject", "Nuevo contacto desde el sitio web");
+    formData.append("subject", CONTACT_FORM_MESSAGES.subject);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -45,7 +46,7 @@ export function ContactForm() {
   if (status === "sent") {
     return (
       <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6 text-sm font-medium text-emerald-800">
-        Gracias por escribirnos. Te contactaremos a la brevedad.
+        {CONTACT_FORM_MESSAGES.success}
       </div>
     );
   }
@@ -92,9 +93,9 @@ export function ContactForm() {
 
       {status === "error" && (
         <p className="text-sm font-medium text-rose-600">
-          No pudimos enviar tu mensaje. Escribenos directo a{" "}
-          <a href="mailto:contacto@htc.lat" className="underline">
-            contacto@htc.lat
+          {CONTACT_FORM_MESSAGES.errorPrefix}{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="underline">
+            {CONTACT_EMAIL}
           </a>
           .
         </p>

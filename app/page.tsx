@@ -1,87 +1,21 @@
 import type { ReactNode } from "react";
 import { ContactForm } from "./contact-form";
-
-const WHATSAPP_NUMBER = "56999386594";
-const CONTACT_EMAIL = "contacto@htc.lat";
-
-const services = [
-  "Cumplimiento Legal",
-  "Implementacion DS44",
-  "Ley Karin",
-  "Automatizacion RRHH",
-  "Auditorias Laborales",
-  "Capacitacion",
-  "Consultoria Estrategica",
-  "IA para RRHH",
-];
-
-const benefits = [
-  "Menos carga administrativa",
-  "Mayor cumplimiento legal",
-  "Preparacion para fiscalizaciones",
-  "Documentacion centralizada",
-  "Menor riesgo de multas",
-  "Informacion en tiempo real",
-];
-
-const virtualRoles = [
-  {
-    title: "Ley Karin",
-    description:
-      "Gestion documental, protocolos, seguimiento de casos y evidencia trazable.",
-  },
-  {
-    title: "Prevencion de Riesgos",
-    description:
-      "Seguimiento DS44, matrices, controles y orden documental permanente.",
-  },
-  {
-    title: "Remuneraciones",
-    description:
-      "Automatizacion de calculos, revision, respaldo y control de alertas.",
-  },
-  {
-    title: "Control de Turnos",
-    description:
-      "Asistencia, jornadas, horas extra y alertas sobre desajustes operativos.",
-  },
-  {
-    title: "Inspector Interno",
-    description:
-      "Auditorias permanentes, revision documental y preparacion para fiscalizaciones.",
-  },
-];
-
-const steps = [
-  "Diagnostico gratuito",
-  "Oportunidades de automatizacion",
-  "Diseno del plan",
-  "Implementacion",
-  "Acompanamiento",
-];
-
-const faqs = [
-  {
-    question: "Debo cambiar mi software?",
-    answer:
-      "No necesariamente. Trabajamos sobre la realidad existente y ordenamos la operacion sin forzar reemplazos innecesarios.",
-  },
-  {
-    question: "Cuanto demora?",
-    answer:
-      "La primera puesta en marcha puede avanzar en menos de un mes, segun el alcance y la madurez del area.",
-  },
-  {
-    question: "Sirve para empresas pequenas?",
-    answer:
-      "Si. El enfoque se adapta al tamano de la organizacion y a su nivel de digitalizacion.",
-  },
-  {
-    question: "Es compatible con mi sistema actual?",
-    answer:
-      "En la mayoria de los casos, si. La propuesta se diseña para convivir con el ecosistema actual.",
-  },
-];
+import {
+  BENEFITS_SECTION,
+  COMPARE,
+  CONTACT_EMAIL,
+  CONTACT_SECTION,
+  FAQ_SECTION,
+  HEADER,
+  HERO,
+  METHOD_SECTION,
+  NAV_ITEMS,
+  SERVICES_SECTION,
+  TEAM_SECTION,
+  VIRTUAL_ROLES,
+  WHATSAPP_MESSAGE,
+  WHATSAPP_NUMBER,
+} from "../content/site-content.js";
 
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
@@ -114,72 +48,70 @@ function SectionHeading({
 export default function Home() {
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#eef1f4_0%,#f7f5f0_28%,#f7f5f0_100%)] text-slate-950">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_30%),radial-gradient(circle_at_top_right,rgba(15,23,42,0.1),transparent_28%)]" />
-
-      <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-6 lg:px-8">
-        <header className="flex flex-col gap-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold tracking-[0.28em] text-cyan-700">
-              CUMPLIMIENTO LABORAL INTELIGENTE
-            </p>
-            <p className="mt-2 text-sm text-slate-500">
-              Consultoria laboral, RRHH e Inteligencia Artificial
-            </p>
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-[#f7f5f0]/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-sm font-bold text-white">
+              {HEADER.mark}
+            </span>
+            <div>
+              <p className="text-sm font-semibold tracking-[0.28em] text-cyan-700">
+                {HEADER.eyebrow}
+              </p>
+              <p className="mt-1 text-sm text-slate-500">{HEADER.subtitle}</p>
+            </div>
           </div>
 
           <nav className="flex flex-wrap gap-3 text-sm text-slate-600">
-            {["Servicios", "Metodo", "Equipo", "Contacto"].map((item) => (
+            {NAV_ITEMS.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.href}
+                href={item.href}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 transition hover:border-slate-300 hover:bg-white"
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </nav>
-        </header>
+        </div>
+      </header>
 
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_30%),radial-gradient(circle_at_top_right,rgba(15,23,42,0.1),transparent_28%)]" />
+
+      <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-6 lg:px-8">
         <section className="grid gap-14 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
           <div className="space-y-8">
             <div className="inline-flex rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-sm font-medium text-cyan-800">
-              Reducimos hasta 70% de costos administrativos de RRHH
+              {HERO.pill}
             </div>
 
             <div className="space-y-5">
-              <Eyebrow>Consultora chilena</Eyebrow>
+              <Eyebrow>{HERO.eyebrow}</Eyebrow>
               <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-slate-950 sm:text-6xl lg:text-[5.2rem] lg:leading-[0.95]">
-                Cumplimiento laboral inteligente para empresas que necesitan
-                orden, velocidad y control.
+                {HERO.title}
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-slate-600">
-                Ayudamos a implementar DS44, fortalecer Ley Karin y transformar
-                RRHH con procesos documentados, automatizacion e Inteligencia
-                Artificial.
+                {HERO.lede}
               </p>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
-                href="#contacto"
+                href={HERO.primaryCta.href}
                 className="rounded-full bg-slate-950 px-6 py-4 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
               >
-                Agenda una reunion
+                {HERO.primaryCta.label}
               </a>
               <a
-                href="#metodo"
+                href={HERO.secondaryCta.href}
                 className="rounded-full border border-slate-300 bg-white/90 px-6 py-4 text-center text-sm font-semibold text-slate-900 transition hover:border-slate-400 hover:bg-white"
               >
-                Solicita un diagnostico gratuito
+                {HERO.secondaryCta.label}
               </a>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
-              {[
-                ["20+ anos", "asesorando organizaciones"],
-                ["5 roles", "virtuales especializados"],
-                ["24/7", "automatizacion y alertas"],
-              ].map(([value, label]) => (
+              {HERO.stats.map(({ value, label }) => (
                 <div
                   key={value}
                   className="rounded-3xl border border-slate-200 bg-white/85 p-5 shadow-[0_8px_30px_rgba(15,23,42,0.04)]"
@@ -197,18 +129,18 @@ export default function Home() {
             <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-[0_24px_90px_rgba(15,23,42,0.12)] backdrop-blur">
               <div className="flex items-start justify-between gap-4 border-b border-slate-200 pb-5">
                 <div>
-                  <Eyebrow>Cinco empleados virtuales</Eyebrow>
+                  <Eyebrow>{HERO.panel.eyebrow}</Eyebrow>
                   <p className="mt-2 text-2xl font-semibold tracking-tight">
-                    En menos de un mes
+                    {HERO.panel.title}
                   </p>
                 </div>
                 <div className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-800">
-                  IA aplicada a RRHH
+                  {HERO.panel.badge}
                 </div>
               </div>
 
               <div className="mt-6 space-y-4">
-                {virtualRoles.map((role, index) => (
+                {VIRTUAL_ROLES.map((role, index) => (
                   <article
                     key={role.title}
                     className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-slate-300 hover:bg-white"
@@ -235,18 +167,18 @@ export default function Home() {
 
         <section className="grid gap-8 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_18px_70px_rgba(15,23,42,0.06)] lg:grid-cols-[0.9fr_1.1fr]">
           <SectionHeading
-            eyebrow="Antes y despues"
-            title="De la operacion manual a un sistema de cumplimiento vivo."
-            description="Muchos equipos siguen trabajando con planillas, correos y documentos dispersos. Eso aumenta los errores, eleva el costo administrativo y deja huecos de trazabilidad."
+            eyebrow={COMPARE.eyebrow}
+            title={COMPARE.title}
+            description={COMPARE.description}
           />
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="rounded-3xl border border-rose-200 bg-rose-50 p-5">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-rose-700">
-                Antes
+                {COMPARE.before.label}
               </p>
               <ul className="mt-4 space-y-3 text-sm leading-6 text-rose-950">
-                {["Planillas Excel", "Documentos dispersos", "Correos", "Errores", "Multas", "Retrabajo"].map((item) => (
+                {COMPARE.before.items.map((item) => (
                   <li key={item} className="rounded-2xl bg-white/80 px-3 py-2">
                     {item}
                   </li>
@@ -256,17 +188,10 @@ export default function Home() {
 
             <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
-                Despues
+                {COMPARE.after.label}
               </p>
               <ul className="mt-4 space-y-3 text-sm leading-6 text-emerald-950">
-                {[
-                  "Procesos automatizados",
-                  "IA trabajando 24/7",
-                  "Documentos centralizados",
-                  "Cumplimiento permanente",
-                  "Reportes automáticos",
-                  "Indicadores en tiempo real",
-                ].map((item) => (
+                {COMPARE.after.items.map((item) => (
                   <li key={item} className="rounded-2xl bg-white/80 px-3 py-2">
                     {item}
                   </li>
@@ -278,15 +203,15 @@ export default function Home() {
 
         <section id="servicios" className="space-y-8 pt-16">
           <SectionHeading
-            eyebrow="Servicios"
-            title="Una consultora, múltiples frentes de soporte."
-            description="Cubrimos cumplimiento, prevencion, automatizacion, formacion y estrategia con una sola hoja de ruta."
+            eyebrow={SERVICES_SECTION.eyebrow}
+            title={SERVICES_SECTION.title}
+            description={SERVICES_SECTION.description}
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service, index) => (
+            {SERVICES_SECTION.items.map((service, index) => (
               <article
-                key={service}
+                key={service.title}
                 className="rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_10px_40px_rgba(15,23,42,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_60px_rgba(15,23,42,0.08)]"
               >
                 <div className="flex items-center justify-between">
@@ -296,11 +221,10 @@ export default function Home() {
                   <div className="h-px flex-1 bg-slate-200" />
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-slate-950">
-                  {service}
+                  {service.title}
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Diseñado para mejorar cumplimiento, ordenar evidencia y
-                  acelerar la ejecucion sin friccion operativa.
+                  {service.description}
                 </p>
               </article>
             ))}
@@ -313,19 +237,17 @@ export default function Home() {
             className="rounded-[2rem] border border-slate-200 bg-slate-950 p-8 text-white shadow-[0_24px_90px_rgba(15,23,42,0.24)]"
           >
             <div className="max-w-3xl space-y-4">
-              <Eyebrow>Beneficios</Eyebrow>
+              <Eyebrow>{BENEFITS_SECTION.eyebrow}</Eyebrow>
               <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                Menos riesgo y mas control.
+                {BENEFITS_SECTION.title}
               </h2>
               <p className="text-base leading-8 text-slate-300">
-                El resultado es una operacion con menos carga administrativa,
-                mejor trazabilidad y un equipo que puede enfocarse en decisiones
-                de valor.
+                {BENEFITS_SECTION.description}
               </p>
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {benefits.map((benefit) => (
+              {BENEFITS_SECTION.items.map((benefit) => (
                 <div
                   key={benefit}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-100"
@@ -338,15 +260,15 @@ export default function Home() {
 
           <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_18px_70px_rgba(15,23,42,0.06)]">
             <SectionHeading
-              eyebrow="Como trabajamos"
-              title="Un proceso corto, claro y medible."
-              description="Cada fase se diseña para avanzar con orden, asegurar adopcion y mostrar resultados medibles desde el inicio."
+              eyebrow={METHOD_SECTION.eyebrow}
+              title={METHOD_SECTION.title}
+              description={METHOD_SECTION.description}
             />
 
             <div className="mt-6 space-y-4">
-              {steps.map((step, index) => (
+              {METHOD_SECTION.steps.map((step, index) => (
                 <div
-                  key={step}
+                  key={step.title}
                   className="flex gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"
                 >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white">
@@ -354,11 +276,10 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="text-base font-semibold text-slate-950">
-                      {step}
+                      {step.title}
                     </p>
                     <p className="mt-1 text-sm leading-6 text-slate-600">
-                      Cada etapa ordena la implementacion y deja una siguiente
-                      decision clara.
+                      {step.description}
                     </p>
                   </div>
                 </div>
@@ -367,52 +288,28 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="equipo" className="grid gap-8 pt-16 lg:grid-cols-[0.92fr_1.08fr]">
-          <div>
-            <SectionHeading
-              eyebrow="Fundador"
-              title="Carlos Albornoz."
-              description="Empresario, psicologo organizacional, academico y consultor de empresas. Mas de 20 anos asesorando organizaciones en gestion de personas, legislacion laboral, liderazgo y desarrollo organizacional."
-            />
-            <div className="mt-6 rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_14px_50px_rgba(15,23,42,0.05)]">
-              <p className="text-base leading-8 text-slate-700">
-                Su experiencia combina psicologia organizacional, direccion de
-                empresas, legislacion laboral aplicada al negocio y formacion
-                de lideres, con foco en integrar Inteligencia Artificial para
-                transformar areas administrativas en unidades estrategicas.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-100 p-8">
-            <Eyebrow>Prueba social</Eyebrow>
-            <div className="mt-5 grid gap-4 lg:grid-cols-3">
-              {[
-                "Espacio para testimonios de clientes.",
-                "Casos de reduccion de carga administrativa.",
-                "Resultados en cumplimiento y control.",
-              ].map((item) => (
-                <article
-                  key={item}
-                  className="rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_12px_40px_rgba(15,23,42,0.04)]"
-                >
-                  <div className="text-3xl leading-none text-cyan-700">“</div>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">{item}</p>
-                </article>
-              ))}
-            </div>
+        <section id="equipo" className="pt-16">
+          <SectionHeading
+            eyebrow={TEAM_SECTION.eyebrow}
+            title={TEAM_SECTION.name}
+            description={TEAM_SECTION.description}
+          />
+          <div className="mt-6 max-w-3xl rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_14px_50px_rgba(15,23,42,0.05)]">
+            <p className="text-base leading-8 text-slate-700">
+              {TEAM_SECTION.bio}
+            </p>
           </div>
         </section>
 
         <section className="grid gap-8 pt-16 lg:grid-cols-[0.95fr_1.05fr]">
           <SectionHeading
-            eyebrow="Preguntas frecuentes"
-            title="Resolvemos las dudas mas comunes antes de partir."
-            description="Nos interesa que el equipo entienda la propuesta antes de tomar una decision."
+            eyebrow={FAQ_SECTION.eyebrow}
+            title={FAQ_SECTION.title}
+            description={FAQ_SECTION.description}
           />
 
           <div className="space-y-4">
-            {faqs.map((faq) => (
+            {FAQ_SECTION.items.map((faq) => (
               <details
                 key={faq.question}
                 className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_10px_40px_rgba(15,23,42,0.03)]"
@@ -435,34 +332,31 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div className="space-y-6">
               <div className="space-y-4">
-                <Eyebrow>Contacto</Eyebrow>
+                <Eyebrow>{CONTACT_SECTION.eyebrow}</Eyebrow>
                 <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-                  Descubra cuanto podria ahorrar automatizando su area de
-                  Recursos Humanos.
+                  {CONTACT_SECTION.title}
                 </h2>
                 <p className="max-w-3xl text-base leading-8 text-slate-600">
-                  Agende una reunion y conozca como su empresa puede contar
-                  con cinco asistentes virtuales especializados en
-                  cumplimiento laboral en menos de un mes.
+                  {CONTACT_SECTION.description}
                 </p>
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                    "Hola, quiero saber mas sobre sus servicios de cumplimiento laboral.",
+                    WHATSAPP_MESSAGE,
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-4 text-center text-sm font-semibold text-white transition hover:bg-emerald-700"
                 >
-                  Escribir por WhatsApp
+                  {CONTACT_SECTION.whatsappCtaLabel}
                 </a>
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-4 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
                 >
-                  Escribir por correo
+                  {CONTACT_SECTION.emailCtaLabel}
                 </a>
               </div>
 
