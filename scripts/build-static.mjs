@@ -4,6 +4,10 @@ import path from "node:path";
 const root = process.cwd();
 const outDir = path.join(root, "out");
 
+const CONTACT_EMAIL = "contacto@htc.lat";
+const WHATSAPP_NUMBER = "56999386594";
+const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY ?? "";
+
 const services = [
   "Cumplimiento Legal",
   "Implementacion DS44",
@@ -380,7 +384,43 @@ const page = `<!DOCTYPE html>
         letter-spacing: -0.03em;
       }
       .cta p { color: var(--muted); font-size: 16px; line-height: 1.9; max-width: 780px; }
+      .cta .actions { margin-top: 22px; }
+      .button-whatsapp { background: #059669; color: #fff; border-color: #059669; }
+      .contact-note { color: var(--muted); font-size: 14px; margin-top: 16px; }
+      .contact-panel { padding: 26px; }
+      .contact-form { display: grid; gap: 12px; }
+      .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .contact-form input, .contact-form textarea {
+        width: 100%;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: #fff;
+        padding: 12px 16px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--text);
+        box-sizing: border-box;
+      }
+      .contact-form textarea { resize: vertical; }
+      .contact-form button {
+        border-radius: 999px;
+        border: none;
+        background: #0f172a;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 14px 18px;
+        cursor: pointer;
+      }
+      .contact-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+      .contact-status { font-size: 14px; margin: 0; }
+      .contact-status.error { color: #e11d48; }
+      .contact-status.success { color: #047857; font-weight: 600; }
       .footer-spacer { height: 12px; }
+
+      @media (max-width: 640px) {
+        .contact-row { grid-template-columns: 1fr; }
+      }
 
       @media (max-width: 1024px) {
         .hero, .section-grid, .team-grid, .cta-grid { grid-template-columns: 1fr; display: grid; }
@@ -551,15 +591,35 @@ const page = `<!DOCTYPE html>
         </section>
 
         <section class="cta" id="contacto">
-          <div class="cta-grid">
+          <div class="cta-grid" style="align-items:flex-start;">
             <div>
               <p class="eyebrow">Contacto</p>
               <h2>Descubra cuanto podria ahorrar automatizando su area de Recursos Humanos.</h2>
               <p>Agende una reunion y conozca como su empresa puede contar con cinco asistentes virtuales especializados en cumplimiento laboral en menos de un mes.</p>
+              <div class="actions">
+                <a class="button button-whatsapp" target="_blank" rel="noopener noreferrer" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero saber mas sobre sus servicios de cumplimiento laboral.")}">Escribir por WhatsApp</a>
+                <a class="button" href="mailto:${CONTACT_EMAIL}">Escribir por correo</a>
+              </div>
+              <p class="contact-note">${CONTACT_EMAIL} &middot; +${WHATSAPP_NUMBER}</p>
             </div>
-            <a class="button" href="mailto:contacto@carlosalbornoz.cl">Agendar reunion</a>
+            <div class="panel contact-panel">
+              <form class="contact-form" id="contact-form">
+                <div class="contact-row">
+                  <input type="text" name="name" placeholder="Nombre" required />
+                  <input type="email" name="email" placeholder="Correo electronico" required />
+                </div>
+                <input type="tel" name="phone" placeholder="Telefono (opcional)" />
+                <textarea name="message" rows="4" placeholder="Cuentanos que necesitas" required></textarea>
+                <button type="submit">Enviar mensaje</button>
+                <p class="contact-status" id="contact-status"></p>
+              </form>
+            </div>
           </div>
         </section>
+        <script>
+          window.WEB3FORMS_ACCESS_KEY = ${JSON.stringify(WEB3FORMS_ACCESS_KEY)};
+        </script>
+        <script src="/contact-form.js"></script>
         <div class="footer-spacer"></div>
       </div>
     </main>
@@ -572,6 +632,10 @@ await writeFile(path.join(outDir, "index.html"), page, "utf8");
 
 try {
   await copyFile(path.join(root, "public", "favicon.svg"), path.join(outDir, "favicon.svg"));
+} catch {}
+
+try {
+  await copyFile(path.join(root, "public", "contact-form.js"), path.join(outDir, "contact-form.js"));
 } catch {}
 
 console.log("Static site written to out/");

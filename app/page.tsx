@@ -1,4 +1,8 @@
 import type { ReactNode } from "react";
+import { ContactForm } from "./contact-form";
+
+const WHATSAPP_NUMBER = "56999386594";
+const CONTACT_EMAIL = "contacto@htc.lat";
 
 const services = [
   "Cumplimiento Legal",
@@ -428,26 +432,48 @@ export default function Home() {
           id="contacto"
           className="mt-16 rounded-[2.25rem] border border-cyan-200 bg-[linear-gradient(135deg,#ffffff_0%,#f0fbff_55%,#e2f6ff_100%)] p-8 shadow-[0_24px_90px_rgba(14,165,233,0.12)]"
         >
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div className="space-y-4">
-              <Eyebrow>Contacto</Eyebrow>
-              <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-                Descubra cuanto podria ahorrar automatizando su area de Recursos
-                Humanos.
-              </h2>
-              <p className="max-w-3xl text-base leading-8 text-slate-600">
-                Agende una reunion y conozca como su empresa puede contar con
-                cinco asistentes virtuales especializados en cumplimiento
-                laboral en menos de un mes.
+          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <Eyebrow>Contacto</Eyebrow>
+                <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                  Descubra cuanto podria ahorrar automatizando su area de
+                  Recursos Humanos.
+                </h2>
+                <p className="max-w-3xl text-base leading-8 text-slate-600">
+                  Agende una reunion y conozca como su empresa puede contar
+                  con cinco asistentes virtuales especializados en
+                  cumplimiento laboral en menos de un mes.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                    "Hola, quiero saber mas sobre sus servicios de cumplimiento laboral.",
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-4 text-center text-sm font-semibold text-white transition hover:bg-emerald-700"
+                >
+                  Escribir por WhatsApp
+                </a>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-4 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
+                >
+                  Escribir por correo
+                </a>
+              </div>
+
+              <p className="text-sm text-slate-500">
+                {CONTACT_EMAIL} · +{WHATSAPP_NUMBER}
               </p>
             </div>
 
-            <a
-              href="mailto:contacto@carlosalbornoz.cl"
-              className="inline-flex rounded-full bg-slate-950 px-7 py-4 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
-              Agendar reunion
-            </a>
+            <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_14px_50px_rgba(15,23,42,0.06)]">
+              <ContactForm />
+            </div>
           </div>
         </section>
       </div>
